@@ -20,3 +20,5 @@ router.get('/', (req, res) => {
     res.status(500).json({ message: 'Failed to retrieve cars' });
   });
 });
+
+module.exports = router;
