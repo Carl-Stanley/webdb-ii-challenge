@@ -50,6 +50,40 @@ router.get('/:id', (req, res) => {
       res.status(500).json({ message: "Failed to store data" });
     });
   });
+
+  // Delete a Car 
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+      const count = await db.del().from('cars').where({ id });
+      count ? res.status(200).json({ deleted: count })
+          : res.status(404).json({ message: 'car not found' });
+  } catch (err) {
+      res.status(500).json({ message: 'Error', error: err });
+  }
+
+
+});
   
+// Update a car
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  db('cars').where({ id }).update(changes)
+      .then(count => {
+          if (count) {
+              res.status(200).json({ updated: count });
+          } else {
+              res.status(404).json({ message: 'car not found' });
+          }
+      })
+      .catch(err => {
+          res.status(500).json({ message: 'Error' });
+      });
+
+
+});
 
 module.exports = router;
