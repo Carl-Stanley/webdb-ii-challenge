@@ -14,7 +14,7 @@ const router = express.Router();
 // All Cars
 router.get('/', (req, res) => {
   db('cars')
-  .then(fruits => {
+  .then(cars => {
     res.json(cars); 
   })
   .catch (err => {
